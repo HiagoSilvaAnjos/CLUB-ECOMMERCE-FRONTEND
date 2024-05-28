@@ -1,10 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./Components/Header/Header.component";
+import HomePage from "./Pages/Home/Home.page";
 
 function App() {
   return (
     <>
-      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
