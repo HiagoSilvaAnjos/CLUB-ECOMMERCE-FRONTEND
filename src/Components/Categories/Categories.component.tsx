@@ -6,7 +6,7 @@ import Category from "../../types/category.types";
 // import env from "../../config/env.config";
 
 import CategoryItem from "../Category-item/Category-item.component";
-import "./Categories.styles.css";
+
 import { CategoriesContainer, CategoriesContent } from "./Categories.styles";
 
 const Categories = () => {

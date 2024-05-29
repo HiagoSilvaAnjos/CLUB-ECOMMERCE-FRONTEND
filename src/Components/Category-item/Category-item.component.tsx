@@ -1,8 +1,5 @@
 import Category from "../../types/category.types";
 import { CategoryItemContainer, CategoryName } from "./Category-item.styles";
-
-import "./Category-item.styles.css";
-
 interface CategoryItemProps {
   category: Category;
 }
