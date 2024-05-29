@@ -11,7 +11,7 @@ const CategoryItem = ({ category }: CategoryItemProps) => {
     <>
       <div
         className="categoryItemContainer"
-        style={{ backgroundImage: category.imageUrl }}
+        style={{ backgroundImage: `url('${category.imageUrl}')` }}
       >
         <div className="categoryName">
           <p>{category.displayName}</p>
