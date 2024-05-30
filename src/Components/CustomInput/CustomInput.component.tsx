@@ -1,13 +1,18 @@
-import { InputHTMLAttributes } from "react";
+import React, { FunctionComponent, InputHTMLAttributes } from "react";
 
 import { CustomInputContainer } from "./CustomInput.styles";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  hasError?: boolean;
+  $hasError?: boolean;
 }
 
-const CustomInput = ({ hasError, ...rest }: CustomInputProps) => {
-  return <CustomInputContainer {...rest} hasError={hasError} />;
-};
+const CustomInput: FunctionComponent<CustomInputProps> = React.forwardRef(
+  (props, ref) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return <CustomInputContainer {...props} ref={ref as any} />;
+  }
+);
+
+CustomInput.displayName = "CustomInput";
 
 export default CustomInput;
