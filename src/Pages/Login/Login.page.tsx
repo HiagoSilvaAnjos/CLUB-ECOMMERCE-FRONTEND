@@ -17,12 +17,17 @@ import {
 import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
 
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
 const LoginPage = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm<LoginForm>();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmitPress = (data: any) => {
@@ -67,6 +72,7 @@ const LoginPage = () => {
           <LoginInputContainer>
             <p>Senha</p>
             <CustomInput
+              type="password"
               $hasError={!!errors.password}
               placeholder="Digite sua senha"
               {...register("password", { required: true })}

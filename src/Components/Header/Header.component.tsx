@@ -16,6 +16,10 @@ const Header = () => {
     navigate("/login");
   };
 
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
+
   return (
     <>
       <HeaderContainer>
@@ -23,7 +27,7 @@ const Header = () => {
         <HeaderItems>
           <HeaderItem>Explorar</HeaderItem>
           <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-          <HeaderItem>Criar conta</HeaderItem>
+          <HeaderItem onClick={handleSignUpClick}>Criar conta</HeaderItem>
           <HeaderItem>
             <BsCart3 size={25} />
             <span style={{ marginLeft: 5 }}>5</span>
