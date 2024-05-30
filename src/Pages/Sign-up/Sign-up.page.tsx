@@ -38,8 +38,6 @@ const SignUpPage = () => {
     console.log({ data });
   };
 
-  console.log(errors);
-
   return (
     <>
       <Header />
