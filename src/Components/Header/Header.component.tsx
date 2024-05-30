@@ -12,6 +12,10 @@ import { BsCart3 } from "react-icons/bs";
 const Header = () => {
   const navigate = useNavigate();
 
+  const handleExplorerClick = () => {
+    navigate("/");
+  };
+
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -23,9 +27,9 @@ const Header = () => {
   return (
     <>
       <HeaderContainer>
-        <HeaderTitle>CLUB CLOTHING</HeaderTitle>
+        <HeaderTitle onClick={handleExplorerClick}>CLUB CLOTHING</HeaderTitle>
         <HeaderItems>
-          <HeaderItem>Explorar</HeaderItem>
+          <HeaderItem onClick={handleExplorerClick}>Explorar</HeaderItem>
           <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
           <HeaderItem onClick={handleSignUpClick}>Criar conta</HeaderItem>
           <HeaderItem>
