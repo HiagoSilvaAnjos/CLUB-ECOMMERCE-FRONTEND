@@ -1,4 +1,8 @@
 import { FiLogIn } from "react-icons/fi";
+import { useForm } from "react-hook-form";
+import { isEmail } from "validator";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 
 import CustomButton from "../../Components/CustomButtton/CustomButton.component";
 import CustomInput from "../../Components/CustomInput/CustomInput.component";
@@ -12,11 +16,10 @@ import {
   SignUpInputContainer,
 } from "./Sign-up.styles";
 
-import { useForm } from "react-hook-form";
-import { isEmail } from "validator";
+import { auth, db } from "../../config/firebase.config";
 
 interface SignUpForm {
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -34,8 +37,23 @@ const SignUpPage = () => {
   const watchPassword = watch("password");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmitPress = (data: any) => {
-    console.log({ data });
+  const handleSubmitPress = async (data: SignUpForm) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      await addDoc(collection(db, "users"), {
+        id: userCredentials.user.uid,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: userCredentials.user.email,
+      });
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   return (
@@ -50,11 +68,11 @@ const SignUpPage = () => {
             <p>Nome</p>
             <CustomInput
               placeholder="Digite seu nome"
-              {...register("name", { required: true })}
-              $hasError={!!errors.name}
+              {...register("firstName", { required: true })}
+              $hasError={!!errors.firstName}
             />
 
-            {errors.name?.type === "required" && (
+            {errors.firstName?.type === "required" && (
               <ErrorMessage>O nome é obrigatório.</ErrorMessage>
             )}
           </SignUpInputContainer>
