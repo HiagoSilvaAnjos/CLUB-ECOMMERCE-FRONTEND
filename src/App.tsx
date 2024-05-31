@@ -6,7 +6,13 @@ import HomePage from "./Pages/Home/Home.page";
 import LoginPage from "./Pages/Login/Login.page";
 import SignUpPage from "./Pages/Sign-up/Sign-up.page";
 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/firebase.config";
+
 function App() {
+  onAuthStateChanged(auth, (user) => {
+    console.log(user);
+  });
   return (
     <>
       <BrowserRouter>

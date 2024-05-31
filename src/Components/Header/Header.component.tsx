@@ -8,6 +8,8 @@ import {
 } from "./Header.styles";
 
 import { BsCart3 } from "react-icons/bs";
+import { auth } from "../../config/firebase.config";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const Header = () => {
         <HeaderItems>
           <HeaderItem onClick={handleExplorerClick}>Explorar</HeaderItem>
           <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
+          <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
           <HeaderItem onClick={handleSignUpClick}>Criar conta</HeaderItem>
           <HeaderItem>
             <BsCart3 size={25} />
