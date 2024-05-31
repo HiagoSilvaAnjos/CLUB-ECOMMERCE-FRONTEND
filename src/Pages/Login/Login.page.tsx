@@ -16,6 +16,12 @@ import {
 
 import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../config/firebase.config";
 
 interface LoginForm {
   email: string;
@@ -27,11 +33,25 @@ const LoginPage = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<LoginForm>();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmitPress = (data: any) => {
-    console.log({ data });
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      console.log(userCredentials);
+    } catch (error) {
+      const _error = error as AuthError;
+
+      if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+        return setError("password", { type: "mismatch" });
+      }
+    }
   };
 
   return (
@@ -80,6 +100,10 @@ const LoginPage = () => {
 
             {errors.password?.type === "required" && (
               <ErrorMessage>A senha é obrigatória.</ErrorMessage>
+            )}
+
+            {errors.password?.type === "mismatch" && (
+              <ErrorMessage>Senha inválida.</ErrorMessage>
             )}
           </LoginInputContainer>
 
