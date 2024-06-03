@@ -12,6 +12,7 @@ import CustomButton from "../../Components/CustomButtton/CustomButton.component"
 import CustomInput from "../../Components/CustomInput/CustomInput.component";
 import Header from "../../Components/Header/Header.component";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage.component";
+import LoadingComponent from "../../Components/Loading/Loading.component";
 
 import {
   SignUpContainer,
@@ -22,7 +23,7 @@ import {
 
 import { auth, db } from "../../config/firebase.config";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/user.context";
 
@@ -43,6 +44,8 @@ const SignUpPage = () => {
     watch,
   } = useForm<SignUpForm>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const watchPassword = watch("password");
 
   const { isAuthenticated } = useContext(UserContext);
@@ -58,6 +61,7 @@ const SignUpPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmitPress = async (data: SignUpForm) => {
     try {
+      setIsLoading(true);
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -77,12 +81,16 @@ const SignUpPage = () => {
       if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
         return setError("email", { type: "email-already-in-use" });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
       <Header />
+
+      {isLoading && <LoadingComponent />}
 
       <SignUpContainer>
         <SignUpContent>
