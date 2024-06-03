@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { Container } from "./CategoriesOverview.styles";
 import { CategoryContext } from "../../contexts/category.context";
 import LoadingComponent from "../Loading/Loading.component";
+import CategoryOverview from "../CategoryOverview/CategoryOverview.component";
 
 const CategoriesOverview = () => {
   const { categories, fetchCategories, isLoading } =
@@ -19,7 +20,10 @@ const CategoriesOverview = () => {
       <Container>
         {isLoading && <LoadingComponent />}
         {categories.map((category) => (
-          <p key={category.id}>{category.displayName}</p>
+          <CategoryOverview
+            key={category.id}
+            category={category}
+          ></CategoryOverview>
         ))}
       </Container>
     </>
