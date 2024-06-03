@@ -12,6 +12,7 @@ import { auth, db } from "./config/firebase.config";
 import { UserContext } from "./contexts/user.context";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { userConverter } from "./converters/firestore.converter";
+import LoadingComponent from "./Components/Loading/Loading.component";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -43,7 +44,7 @@ function App() {
   });
 
   if (isInitialized) {
-    return null;
+    return <LoadingComponent />;
   }
 
   return (
