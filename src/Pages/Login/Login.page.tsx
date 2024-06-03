@@ -5,6 +5,7 @@ import CustomButton from "../../Components/CustomButtton/CustomButton.component"
 import Header from "../../Components/Header/Header.component";
 import CustomInput from "../../Components/CustomInput/CustomInput.component";
 import ErrorMessage from "../../Components/ErrorMessage/ErrorMessage.component";
+import LoadingComponent from "../../Components/Loading/Loading.component";
 
 import {
   LoginContainer,
@@ -26,7 +27,7 @@ import {
 
 import { auth, db, googleProvider } from "../../config/firebase.config";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { useNavigate } from "react-router-dom";
 
@@ -43,6 +44,8 @@ const LoginPage = () => {
     setError,
   } = useForm<LoginForm>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const { isAuthenticated } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -55,6 +58,7 @@ const LoginPage = () => {
 
   const handleSubmitPress = async (data: LoginForm) => {
     try {
+      setIsLoading(true);
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         data.email,
@@ -68,11 +72,14 @@ const LoginPage = () => {
       if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
         return setError("password", { type: "mismatch" });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSignInWithGooglePress = async () => {
     try {
+      setIsLoading(true);
       const userCredentials = await signInWithPopup(auth, googleProvider);
 
       const querySnapshot = await getDocs(
@@ -98,12 +105,16 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error("Error during sign-in:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
       <Header />
+
+      {isLoading && <LoadingComponent />}
 
       <LoginContainer>
         <LoginContent>
