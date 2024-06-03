@@ -13,6 +13,7 @@ import { UserContext } from "./contexts/user.context";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { userConverter } from "./converters/firestore.converter";
 import LoadingComponent from "./Components/Loading/Loading.component";
+import ExplorePage from "./Pages/Explore/Explore.page";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -54,6 +55,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/explore" element={<ExplorePage />} />
         </Routes>
       </BrowserRouter>
     </>
