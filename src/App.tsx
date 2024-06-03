@@ -11,6 +11,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./config/firebase.config";
 import { UserContext } from "./contexts/user.context";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { userConverter } from "./converters/firestore.converter";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -26,13 +27,15 @@ function App() {
     const isSigninIn = !isAuthenticated && user;
     if (isSigninIn) {
       const querySpanshot = await getDocs(
-        query(collection(db, "users"), where("id", "==", user.uid))
+        query(
+          collection(db, "users").withConverter(userConverter),
+          where("id", "==", user.uid)
+        )
       );
 
       const userFormFirestore = querySpanshot.docs[0]?.data();
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      loginUser(userFormFirestore as any);
+      loginUser(userFormFirestore);
       return setIsInitialized(false);
     }
 
