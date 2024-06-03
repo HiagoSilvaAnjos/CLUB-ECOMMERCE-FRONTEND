@@ -22,6 +22,10 @@ import {
 
 import { auth, db } from "../../config/firebase.config";
 
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/user.context";
+
 interface SignUpForm {
   firstName: string;
   lastName: string;
@@ -40,6 +44,16 @@ const SignUpPage = () => {
   } = useForm<SignUpForm>();
 
   const watchPassword = watch("password");
+
+  const { isAuthenticated } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmitPress = async (data: SignUpForm) => {
