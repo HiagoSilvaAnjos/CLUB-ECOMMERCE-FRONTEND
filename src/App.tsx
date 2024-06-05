@@ -6,6 +6,8 @@ import "./App.css";
 import HomePage from "./Pages/Home/Home.page";
 import LoginPage from "./Pages/Login/Login.page";
 import SignUpPage from "./Pages/Sign-up/Sign-up.page";
+import ExplorePage from "./Pages/Explore/Explore.page";
+import CategoryDetailsPage from "./Pages/Category-details/Category-details.page";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./config/firebase.config";
@@ -13,7 +15,6 @@ import { UserContext } from "./contexts/user.context";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { userConverter } from "./converters/firestore.converter";
 import LoadingComponent from "./Components/Loading/Loading.component";
-import ExplorePage from "./Pages/Explore/Explore.page";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -56,6 +57,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/category/:id" element={<CategoryDetailsPage />} />
         </Routes>
       </BrowserRouter>
     </>
