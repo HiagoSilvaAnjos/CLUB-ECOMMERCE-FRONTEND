@@ -14,7 +14,9 @@ import { auth, db } from "./config/firebase.config";
 import { UserContext } from "./contexts/user.context";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { userConverter } from "./converters/firestore.converter";
+
 import LoadingComponent from "./Components/Loading/Loading.component";
+import Cart from "./Components/Cart/Cart.component";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -59,6 +61,7 @@ function App() {
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/category/:id" element={<CategoryDetailsPage />} />
         </Routes>
+        <Cart />
       </BrowserRouter>
     </>
   );
