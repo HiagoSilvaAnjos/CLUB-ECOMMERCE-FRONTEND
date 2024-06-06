@@ -16,8 +16,13 @@ import { useContext } from "react";
 import { CartContext } from "../../contexts/cart.context";
 
 const Cart = () => {
-  const { isVisible, toggleCart, products, productsTotalPrice } =
-    useContext(CartContext);
+  const {
+    isVisible,
+    toggleCart,
+    products,
+    productsTotalPrice,
+    productsTotalQuantity,
+  } = useContext(CartContext);
 
   return (
     <>
@@ -30,10 +35,16 @@ const Cart = () => {
             <CartItem key={product.id} product={product} />
           ))}
 
-          <CartTotal>Total: R${productsTotalPrice}</CartTotal>
-          <CustomButton startIcon={<BsCartCheck />}>
-            Ir para o Checkout
-          </CustomButton>
+          {productsTotalQuantity > 0 ? (
+            <div>
+              <CartTotal>Total: R${productsTotalPrice}</CartTotal>
+              <CustomButton startIcon={<BsCartCheck />}>
+                Ir para o Checkout
+              </CustomButton>
+            </div>
+          ) : (
+            <div>Seu Carrinho está vazio...</div>
+          )}
         </CartContent>
       </CartContainer>
     </>
