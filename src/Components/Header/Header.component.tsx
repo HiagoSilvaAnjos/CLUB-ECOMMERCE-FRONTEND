@@ -18,7 +18,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { isAuthenticated } = useContext(UserContext);
-  const { toggleCart } = useContext(CartContext);
+  const { toggleCart, productsTotalQuantity } = useContext(CartContext);
 
   const handleHomeClick = () => {
     navigate("/");
@@ -53,7 +53,7 @@ const Header = () => {
           )}
           <HeaderItem onClick={toggleCart}>
             <BsCart3 size={25} />
-            <span style={{ marginLeft: 5 }}>5</span>
+            <span style={{ marginLeft: 5 }}>{productsTotalQuantity}</span>
           </HeaderItem>
         </HeaderItems>
       </HeaderContainer>
