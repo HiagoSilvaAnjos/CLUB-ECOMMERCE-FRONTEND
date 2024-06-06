@@ -32,7 +32,7 @@ interface CartContextProviderProps {
 
 const CartContextProvider = ({ children }: CartContextProviderProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [products, setProduct] = useState<CartProduct[]>([]);
+  const [products, setProducts] = useState<CartProduct[]>([]);
 
   const productsTotalPrice = useMemo(() => {
     return products.reduce((acc, currentProduct) => {
@@ -51,33 +51,30 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
   };
 
   const addProductToCart = (product: Product) => {
-    // verificar se o produto já está no carrinho
     const productIsAlreadyInCart = products.some(
       (item) => item.id === product.id
     );
-    // se sim: aumentar sua quantidade
     if (productIsAlreadyInCart) {
-      return setProduct((prevProduct) =>
-        prevProduct.map((item) =>
+      setProducts((prevProducts) =>
+        prevProducts.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         )
       );
+    } else {
+      setProducts((prevState) => [...prevState, { ...product, quantity: 1 }]);
     }
-
-    // se não: adicioná-lo
-    setProduct((prevState) => [...prevState, { ...product, quantity: 1 }]);
   };
 
   const removeProductFromCart = (productId: string) => {
-    setProduct((products) =>
+    setProducts((products) =>
       products.filter((product) => product.id !== productId)
     );
   };
 
   const increaseProductFromCart = (productId: string) => {
-    setProduct((products) =>
+    setProducts((products) =>
       products.map((product) =>
         product.id === productId
           ? { ...product, quantity: product.quantity + 1 }
@@ -87,7 +84,7 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
   };
 
   const decreaseProductFromCart = (productId: string) => {
-    setProduct((products) =>
+    setProducts((products) =>
       products
         .map((product) =>
           product.id === productId
@@ -99,23 +96,21 @@ const CartContextProvider = ({ children }: CartContextProviderProps) => {
   };
 
   return (
-    <>
-      <CartContext.Provider
-        value={{
-          isVisible,
-          products,
-          productsTotalPrice,
-          productsTotalQuantity,
-          toggleCart,
-          addProductToCart,
-          removeProductFromCart,
-          increaseProductFromCart,
-          decreaseProductFromCart,
-        }}
-      >
-        {children}
-      </CartContext.Provider>
-    </>
+    <CartContext.Provider
+      value={{
+        isVisible,
+        products,
+        productsTotalPrice,
+        productsTotalQuantity,
+        toggleCart,
+        addProductToCart,
+        removeProductFromCart,
+        increaseProductFromCart,
+        decreaseProductFromCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
 };
 
