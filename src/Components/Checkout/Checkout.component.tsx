@@ -19,7 +19,6 @@ const Checkout = () => {
 
   useEffect(() => {
     if (products.length < 1) {
-      console.log("passou");
       return navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
