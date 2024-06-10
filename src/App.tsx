@@ -8,6 +8,7 @@ import LoginPage from "./Pages/Login/Login.page";
 import SignUpPage from "./Pages/Sign-up/Sign-up.page";
 import ExplorePage from "./Pages/Explore/Explore.page";
 import CategoryDetailsPage from "./Pages/Category-details/Category-details.page";
+import CheckoutPage from "./Pages/Checkout/Checkout.page";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./config/firebase.config";
@@ -17,7 +18,7 @@ import { userConverter } from "./converters/firestore.converter";
 
 import LoadingComponent from "./Components/Loading/Loading.component";
 import Cart from "./Components/Cart/Cart.component";
-import CheckoutPage from "./Pages/Checkout/Checkout.page";
+
 import Authentication from "./guards/authentication.guards";
 
 function App() {
