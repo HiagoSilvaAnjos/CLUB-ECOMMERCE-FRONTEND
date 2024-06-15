@@ -21,6 +21,13 @@ export const ProductsContainer = styled.div`
   justify-items: start;
   margin-top: 5px;
   grid-row-gap: 20px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const IconContainer = styled.div`
