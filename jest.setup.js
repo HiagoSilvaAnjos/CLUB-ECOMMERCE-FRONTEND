@@ -1,1 +1,2 @@
-import '@testing-library/jest-dom';
+// eslint-disable-next-line no-undef
+require('@testing-library/jest-dom');
