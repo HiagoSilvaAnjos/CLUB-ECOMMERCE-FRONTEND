@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import CustomInput from "./CustomInput.component";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import Colors from "../../Theme/Theme.colors";
 
@@ -18,5 +19,13 @@ describe("Custom Input", () => {
     );
     const input = getByPlaceholderText("Lorem Ipsum");
     expect(input).toHaveStyle({ border: `none` });
+  });
+
+  it("Should change value when user types", () => {
+    const { getByPlaceholderText } = render(
+      <CustomInput $hasError={false} placeholder="Lorem Ipsum" />
+    );
+    const input = getByPlaceholderText("Lorem Ipsum");
+    userEvent.type(input, "Dolor sit");
   });
 });
