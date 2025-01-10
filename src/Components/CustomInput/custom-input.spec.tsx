@@ -11,4 +11,12 @@ describe("Custom Input", () => {
     const input = getByPlaceholderText("Lorem Ipsum");
     expect(input).toHaveStyle({ border: `2px solid ${Colors.error}` });
   });
+
+  it("Should render without error if hasError is false", () => {
+    const { getByPlaceholderText } = render(
+      <CustomInput $hasError={false} placeholder="Lorem Ipsum" />
+    );
+    const input = getByPlaceholderText("Lorem Ipsum");
+    expect(input).toHaveStyle({ border: `none` });
+  });
 });
